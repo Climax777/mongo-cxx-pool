@@ -6,7 +6,7 @@
  */
 
 #include "MongoHostConnectionPool.h"
-
+#include <boost/container/list.hpp>
 namespace mongopool {
 using namespace boost;
 using namespace mongo;
@@ -40,18 +40,25 @@ const ConnectionString& MongoHostConnectionPool::getConnString() const {
 	return m_ConnString;
 }
 
+MongoHostConnectionPool::StoredConnection::StoredConnection() : conn(0){
+}
+
 MongoHostConnectionPool::StoredConnection::StoredConnection(
 		DBClientBase* c) : conn(c), lastUsed(posix_time::second_clock::local_time()){
+}
+
+MongoHostConnectionPool::StoredConnection::StoredConnection(const StoredConnection&
+		other) : conn(other.conn), lastUsed(other.lastUsed){
 }
 
 bool MongoHostConnectionPool::StoredConnection::ok() {
 	return conn->isStillConnected();
 }
 
-void MongoHostConnectionPool::getStaleConnections(slist<DBClientBase*>& stale) {
+void MongoHostConnectionPool::getStaleConnections(list<DBClientBase*>& stale) {
 	posix_time::ptime now = posix_time::second_clock::local_time();
 
-	slist<MongoHostConnectionPool::StoredConnection> all;
+	list<MongoHostConnectionPool::StoredConnection> all;
 	while ( !m_Pool.empty() ) {
 		StoredConnection c = m_Pool.front();
 		m_Pool.pop_front();

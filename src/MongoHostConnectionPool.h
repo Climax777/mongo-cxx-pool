@@ -26,10 +26,12 @@ public:
 	const ConnectionString& getConnString() const;
 	void setConnString(const ConnectionString& connString);
 
-	void getStaleConnections(slist<DBClientBase*>& stale);
+	void getStaleConnections(list<DBClientBase*>& stale);
 private:
 	struct StoredConnection {
+		StoredConnection();
 		StoredConnection(DBClientBase *c);
+		StoredConnection(const StoredConnection& other);
 		bool ok();
 
 		DBClientBase *conn;
