@@ -12,7 +12,6 @@ namespace mongopool {
 MongoConnectionPool::MongoConnectionPool(): m_IO(), m_TaskTimer(m_IO), m_MaxPoolSize(50), m_TaskRunner([this](){
 	m_TaskTimer.async_wait(bind(&MongoConnectionPool::PeriodicTask, this, asio::placeholders::error));
 	m_IO.run();}) {
-
 }
 
 MongoConnectionPool::~MongoConnectionPool() {
@@ -39,5 +38,4 @@ int MongoConnectionPool::getMaxPoolSize() const {
 void MongoConnectionPool::setMaxPoolSize(int maxPoolSize) {
 	m_MaxPoolSize = maxPoolSize;
 }
-
 } /* namespace mongopool */

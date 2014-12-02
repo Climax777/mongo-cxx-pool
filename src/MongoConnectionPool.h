@@ -14,7 +14,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-#define MCP_PERIODIC_TASK_PERIOD 100
+#define MCP_PERIODIC_TASK_PERIOD 30
 using namespace boost;
 using namespace mongo;
 namespace mongopool {
