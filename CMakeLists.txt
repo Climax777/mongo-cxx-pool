@@ -27,5 +27,6 @@ set(TEST_PATH "${CMAKE_CURRENT_SOURCE_DIR}/tests" )
 set(EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples" )
 
 add_subdirectory(src)
+add_subdirectory(examples)
 #add_subdirectory(test)
 

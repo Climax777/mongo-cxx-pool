@@ -6,23 +6,40 @@
  */
 
 #include "MongoConnection.h"
+#include <iostream>
 
+using std::cerr;
+using std::cout;
+using std::endl;
 namespace mongopool {
 
 MongoConnection::MongoConnection() : m_Connection(0) {
 }
 
 MongoConnection::~MongoConnection() {
+	if(m_Connection) {
+		if(m_Connection->isFailed()) {
+			if(m_Connection->getSockCreationMicroSec() == DBClientBase::INVALID_SOCK_CREATION_TIME)
+				delete m_Connection;
+			else {
+				done();
+			}
+		} else {
+			cerr<< "scoped connection to " << m_Connection->getServerAddress()
+						<< " not being returned to the pool";
+			delete m_Connection;
+		}
+	}
 }
 
 } /* namespace mongopool */
 
-mongopool::MongoConnection::MongoConnection(const string& host) {
+mongopool::MongoConnection::MongoConnection(const string& host) : m_Connection(g_Pool.get(host)){
 	string errMessage;
 	m_ConnString = ConnectionString::parse(host, errMessage);
 }
 
-mongopool::MongoConnection::MongoConnection(const ConnectionString& cs) : m_ConnString(cs) {
+mongopool::MongoConnection::MongoConnection(const ConnectionString& cs) : m_ConnString(cs), m_Connection(g_Pool.get(cs)) {
 }
 
 DBClientBase* mongopool::MongoConnection::operator ->() {
@@ -42,6 +59,10 @@ ConnectionString mongopool::MongoConnection::getConnectionString() {
 }
 
 void mongopool::MongoConnection::done() {
+	if(!m_Connection)
+		return;
+	g_Pool.release(m_ConnString, m_Connection);
+	m_Connection = 0;
 }
 
 bool mongopool::MongoConnection::ok() {

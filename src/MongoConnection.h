@@ -9,6 +9,7 @@
 #define MONGOCONNECTION_H_
 #include <boost/shared_ptr.hpp>
 #include <mongo/client/dbclient.h>
+#include "MongoConnectionPool.h"
 
 using namespace boost;
 using namespace mongo;
@@ -32,10 +33,10 @@ public:
 	void done();
 	bool ok();
 private:
-	DBClientBase* m_Connection;
 	ConnectionString m_ConnString;
+	DBClientBase* m_Connection;
 };
-
+extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 #endif /* MONGOCONNECTION_H_ */

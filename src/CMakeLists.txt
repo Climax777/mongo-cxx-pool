@@ -1,4 +1,4 @@
-find_package(Boost COMPONENTS system thread unit_test_framework REQUIRED)
+find_package(Boost COMPONENTS system thread date_time REQUIRED)
 find_package(MongoDB REQUIRED)
 
 configure_file(
@@ -8,7 +8,7 @@ configure_file(
 
 include_directories("${PROJECT_BINARY_DIR}")
 
-set(SOURCES
+set(LIB_SOURCES
     MongoConnection.cpp
     MongoConnection.h
     MongoConnectionPool.cpp
@@ -19,12 +19,8 @@ set(SOURCES
 
 include_directories(${MongoDB_INCLUDE_DIR}
      ${Boost_INCLUDE_DIR})
-add_library(mongo-cxx-pool SHARED ${SOURCES})
+ add_library(mongo-cxx-pool SHARED ${LIB_SOURCES})
 target_link_libraries(mongo-cxx-pool ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
 
 
-#add_executable(example example.cpp)
-#add_executable(exampleAuth example_auth.cpp)
 
-#target_link_libraries(example shared)
-#target_link_libraries(exampleAuth shared)
