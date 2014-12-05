@@ -30,4 +30,7 @@
 Debug/*
 Release/*
 build/*
+
+*.swp
+*.pyc
 /Debug/

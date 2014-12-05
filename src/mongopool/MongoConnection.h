@@ -9,15 +9,12 @@
 #define MONGOCONNECTION_H_
 #include <boost/shared_ptr.hpp>
 #include <mongo/client/dbclient.h>
-#include "mongopool/config.h"
+#include "mongopool/MongoConfig.h"
 #include "mongopool/MongoConnectionPool.h"
 
-using namespace boost;
+namespace mongopool {
 using namespace mongo;
 using std::string;
-namespace mongopool {
-class MongoConnection;
-typedef shared_ptr<MongoConnection> MongoConnectionPtr;
 class MongoConnection {
 public:
 	MongoConnection();

@@ -16,12 +16,11 @@
 #include "mongopool/MongoHostConnectionPool.h"
 
 #define MCP_PERIODIC_TASK_PERIOD 30
+namespace mongopool {
 using namespace boost;
 using boost::container::map;
 using namespace mongo;
 using std::string;
-namespace mongopool {
-
 class MongoConnectionPool {
 public:
 	MongoConnectionPool();

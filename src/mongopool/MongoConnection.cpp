@@ -7,12 +7,11 @@
 
 #include "mongopool/MongoConnection.h"
 #include <iostream>
-
+using namespace mongo;
 using std::cerr;
 using std::cout;
 using std::endl;
 namespace mongopool {
-
 MongoConnection::MongoConnection() : m_Connection(0) {
 }
 

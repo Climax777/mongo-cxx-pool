@@ -10,6 +10,7 @@
 #include <boost/chrono.hpp>
 
 using namespace std;
+using namespace boost;
 
 int showed = 0;
 void newConnection() {
