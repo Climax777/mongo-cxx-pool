@@ -13,7 +13,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/container/map.hpp>
-#include "MongoHostConnectionPool.h"
+#include "mongopool/MongoHostConnectionPool.h"
 
 #define MCP_PERIODIC_TASK_PERIOD 30
 using namespace boost;

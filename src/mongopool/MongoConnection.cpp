@@ -5,7 +5,7 @@
  *      Author: pieter
  */
 
-#include "MongoConnection.h"
+#include "mongopool/MongoConnection.h"
 #include <iostream>
 
 using std::cerr;

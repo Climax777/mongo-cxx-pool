@@ -4,7 +4,7 @@
  *  Created on: 04 Dec 2014
  *      Author: pieter
  */
-#include "../src/MongoConnection.h"
+#include "mongopool/MongoConnection.h"
 #include <iostream>
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>

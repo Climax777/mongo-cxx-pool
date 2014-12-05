@@ -5,7 +5,7 @@
  *      Author: pieter
  */
 
-#include "MongoHostConnectionPool.h"
+#include "mongopool/MongoHostConnectionPool.h"
 #include <boost/container/list.hpp>
 #include <iostream>
 

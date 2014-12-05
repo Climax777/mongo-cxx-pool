@@ -9,7 +9,8 @@
 #define MONGOCONNECTION_H_
 #include <boost/shared_ptr.hpp>
 #include <mongo/client/dbclient.h>
-#include "MongoConnectionPool.h"
+#include "mongopool/config.h"
+#include "mongopool/MongoConnectionPool.h"
 
 using namespace boost;
 using namespace mongo;
