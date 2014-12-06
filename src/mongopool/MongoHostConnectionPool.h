@@ -15,10 +15,6 @@
 
 #define MCP_CONNECTION_IDLE_TIME 60*5
 namespace mongopool {
-using namespace boost;
-using namespace mongo;
-using boost::container::list;
-using boost::container::deque;
 class MongoHostConnectionPool {
 public:
 	MongoHostConnectionPool();
@@ -27,29 +23,29 @@ public:
 	int getMaxPoolSize() const;
 	void setMaxPoolSize(int maxPoolSize);
 
-	const ConnectionString& getConnString() const;
-	void setConnString(const ConnectionString& connString);
+	const mongo::ConnectionString& getConnString() const;
+	void setConnString(const mongo::ConnectionString& connString);
 	uint64_t getCreated() const;
 	int numAvailable();
 
-	void getStaleConnections(list<DBClientBase*>& stale);
-	DBClientBase* get();
-	void done(DBClientBase* conn);
+	void getStaleConnections(boost::container::list<mongo::DBClientBase*>& stale);
+	mongo::DBClientBase* get();
+	void done(mongo::DBClientBase* conn);
 	void clear();
 	void flush();
 private:
 	struct StoredConnection {
 		StoredConnection();
-		StoredConnection(DBClientBase *c);
+		StoredConnection(mongo::DBClientBase *c);
 		StoredConnection(const StoredConnection& other);
 		bool ok();
 
-		DBClientBase *conn;
-		posix_time::ptime lastUsed;
+		mongo::DBClientBase *conn;
+		boost::posix_time::ptime lastUsed;
 	};
 	int m_MaxPoolSize;
-	deque<StoredConnection> m_Pool;
-	ConnectionString m_ConnString;
+	boost::container::deque<StoredConnection> m_Pool;
+	mongo::ConnectionString m_ConnString;
 	uint64_t m_Created;
 	uint64_t m_minValidCreationTimeMicroSec;
 

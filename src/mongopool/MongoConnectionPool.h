@@ -17,36 +17,32 @@
 
 #define MCP_PERIODIC_TASK_PERIOD 30
 namespace mongopool {
-using namespace boost;
-using boost::container::map;
-using namespace mongo;
-using std::string;
 class MongoConnectionPool {
 public:
 	MongoConnectionPool();
 	virtual ~MongoConnectionPool();
 
-	DBClientBase* get(const string& host);
-	DBClientBase* get(const ConnectionString& host);
+	mongo::DBClientBase* get(const std::string& host);
+	mongo::DBClientBase* get(const mongo::ConnectionString& host);
 
-	void removeHost(const ConnectionString& host);
-	void removeHost(const string& host);
+	void removeHost(const mongo::ConnectionString& host);
+	void removeHost(const std::string& host);
 
-	void release(const ConnectionString& host, DBClientBase* conn);
+	void release(const mongo::ConnectionString& host, mongo::DBClientBase* conn);
 	void flush();
 	void clear();
 	int getMaxPoolSize() const;
 	void setMaxPoolSize(int maxPoolSize);
 private:
-	string BuildHostString(const ConnectionString& host);
-	void PeriodicTask(const system::error_code& e);
-	asio::io_service m_IO;
-	asio::deadline_timer m_TaskTimer;
+	std::string BuildHostString(const mongo::ConnectionString& host);
+	void PeriodicTask(const boost::system::error_code& e);
+	boost::asio::io_service m_IO;
+	boost::asio::deadline_timer m_TaskTimer;
 	int m_MaxPoolSize;
-	thread m_TaskRunner;
+	boost::thread m_TaskRunner;
 
-	mutex m_Mutex;
-	map<string, MongoHostConnectionPool> m_Pools;
+	boost::mutex m_Mutex;
+	boost::container::map<std::string, MongoHostConnectionPool> m_Pools;
 };
 
 extern MongoConnectionPool g_Pool;

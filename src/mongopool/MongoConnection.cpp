@@ -11,6 +11,7 @@ using namespace mongo;
 using std::cerr;
 using std::cout;
 using std::endl;
+using std::string;
 namespace mongopool {
 MongoConnection::MongoConnection() : m_Connection(0) {
 }

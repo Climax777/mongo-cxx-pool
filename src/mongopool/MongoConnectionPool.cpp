@@ -11,6 +11,10 @@
 using std::cout;
 using std::cerr;
 using std::endl;
+using namespace mongo;
+using namespace boost;
+using namespace boost::container;
+using std::string;
 
 namespace mongopool {
 
@@ -24,8 +28,8 @@ MongoConnectionPool::~MongoConnectionPool() {
 	m_TaskRunner.join();
 }
 
-DBClientBase* MongoConnectionPool::get(const string& host) {
-	string errMsg;
+DBClientBase* MongoConnectionPool::get(const std::string& host) {
+	std::string errMsg;
 	ConnectionString cs = ConnectionString::parse(host, errMsg);
 	if(cs.isValid()) {
 		return get(cs);
@@ -46,7 +50,7 @@ DBClientBase* MongoConnectionPool::get(const ConnectionString& host) {
 		return client;
 	}
 
-	string errMessage;
+	std::string errMessage;
 	client = host.connect(errMessage);
 	if(!client) {
 		cerr<< "Could not connect to " << host.getServers()[0].toString() << ": " << errMessage << endl;
@@ -104,8 +108,8 @@ void MongoConnectionPool::removeHost(const ConnectionString& host) {
 	}
 }
 
-void MongoConnectionPool::removeHost(const string& host) {
-	string errMsg;
+void MongoConnectionPool::removeHost(const std::string& host) {
+	std::string errMsg;
 	ConnectionString cs = ConnectionString::parse(host, errMsg);
 	if(cs.isValid())
 		removeHost(cs);
@@ -123,7 +127,7 @@ void MongoConnectionPool::release(const ConnectionString& host,
 	m_Pools[BuildHostString(host)].done(conn);
 }
 
-string MongoConnectionPool::BuildHostString(const ConnectionString& host) {
+std::string MongoConnectionPool::BuildHostString(const ConnectionString& host) {
 	return host.toString() + "/" + host.getDatabase() + "/" + host.getUser();
 }
 MongoConnectionPool g_Pool;

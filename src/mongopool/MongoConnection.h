@@ -13,26 +13,24 @@
 #include "mongopool/MongoConnectionPool.h"
 
 namespace mongopool {
-using namespace mongo;
-using std::string;
 class MongoConnection {
 public:
 	MongoConnection();
-	explicit MongoConnection(const string& host);
-	explicit MongoConnection(const ConnectionString& cs);
+	explicit MongoConnection(const std::string& host);
+	explicit MongoConnection(const mongo::ConnectionString& cs);
 	virtual ~MongoConnection();
 
-	DBClientBase* operator->();
-	DBClientBase& conn();
-	DBClientBase* get();
+	mongo::DBClientBase* operator->();
+	mongo::DBClientBase& conn();
+	mongo::DBClientBase* get();
 
-	ConnectionString getConnectionString();
+	mongo::ConnectionString getConnectionString();
 
 	void done();
 	bool ok();
 private:
-	ConnectionString m_ConnString;
-	DBClientBase* m_Connection;
+	mongo::ConnectionString m_ConnString;
+	mongo::DBClientBase* m_Connection;
 };
 extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
