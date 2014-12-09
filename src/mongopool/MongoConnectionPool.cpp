@@ -15,10 +15,9 @@ using namespace mongo;
 using namespace boost;
 using namespace boost::container;
 using std::string;
-
 namespace mongopool {
 
-MongoConnectionPool::MongoConnectionPool(): m_IO(), m_TaskTimer(m_IO), m_MaxPoolSize(50), m_TaskRunner([this](){
+MongoConnectionPool::MongoConnectionPool(): m_IO(), m_TaskTimer(m_IO), m_MaxPoolSize(MCP_MAX_POOL_SIZE), m_TaskRunner([this](){
 	m_TaskTimer.async_wait(bind(&MongoConnectionPool::PeriodicTask, this, asio::placeholders::error));
 	m_IO.run();}), m_Mutex() {
 }
@@ -124,11 +123,12 @@ void MongoConnectionPool::flush() {
 void MongoConnectionPool::release(const ConnectionString& host,
 		DBClientBase* conn) {
 	lock_guard<mutex> lock(m_Mutex);
+
 	m_Pools[BuildHostString(host)].done(conn);
 }
 
 std::string MongoConnectionPool::BuildHostString(const ConnectionString& host) {
-	return host.toString() + "/" + host.getDatabase() + "/" + host.getUser();
+	return host.toString() + host.getDatabase() + "/" + host.getUser();
 }
 MongoConnectionPool g_Pool;
 } /* namespace mongopool */

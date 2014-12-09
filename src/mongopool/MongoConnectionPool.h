@@ -16,6 +16,7 @@
 #include "mongopool/MongoHostConnectionPool.h"
 
 #define MCP_PERIODIC_TASK_PERIOD 30
+#define MCP_MAX_POOL_SIZE 500
 namespace mongopool {
 class MongoConnectionPool {
 public:
