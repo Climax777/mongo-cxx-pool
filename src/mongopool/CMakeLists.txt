@@ -1,4 +1,4 @@
-find_package(Boost COMPONENTS system thread date_time REQUIRED)
+find_package(Boost COMPONENTS chrono regex system thread date_time REQUIRED)
 find_package(MongoDB REQUIRED)
 
 configure_file(
@@ -22,10 +22,16 @@ set(LIB_FILES
     ${LIB_SOURCES}
     ${LIB_HEADERS}
     )
+	
+if(MSVC)
+	add_definitions(-DLIBMONGOCLIENT_NO_AUTOLIB -DBOOST_ALL_DYN_LINK)
+endif(MSVC)
 include_directories(${MongoDB_INCLUDE_DIR}
     ${Boost_INCLUDE_DIR} ${SRC_PATH})
+	
 add_library(mongo-cxx-pool SHARED ${LIB_FILES})
 add_library(mongo-cxx-pool-static STATIC ${LIB_FILES})
+
 target_link_libraries(mongo-cxx-pool ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(mongo-cxx-pool-static ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
 if(NOT MSVC)

@@ -4,6 +4,11 @@
  *  Created on: 01 Dec 2014
  *      Author: pieter
  */
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
+#endif
 
 #include "mongopool/MongoHostConnectionPool.h"
 #include <boost/container/list.hpp>

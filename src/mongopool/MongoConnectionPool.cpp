@@ -4,6 +4,11 @@
  *  Created on: 01 Dec 2014
  *      Author: pieter
  */
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
+#endif
 
 #include "mongopool/MongoConnectionPool.h"
 #include <iostream>
@@ -130,6 +135,7 @@ void MongoConnectionPool::release(const ConnectionString& host,
 std::string MongoConnectionPool::BuildHostString(const ConnectionString& host) {
 	return host.toString() + host.getDatabase() + "/" + host.getUser();
 }
-MongoConnectionPool g_Pool;
+
+MONGO_CXX_POOL_EXPORT MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 

@@ -7,15 +7,15 @@
 
 #ifndef MONGOHOSTCONNECTIONPOOL_H_
 #define MONGOHOSTCONNECTIONPOOL_H_
-
 #include <boost/container/deque.hpp>
 #include <boost/container/list.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 #include <mongo/client/dbclient.h>
+#include "mongopool/MongoConfig.h"
 
 #define MCP_CONNECTION_IDLE_TIME 60*5
 namespace mongopool {
-class MongoHostConnectionPool {
+class MONGO_CXX_POOL_EXPORT MongoHostConnectionPool {
 public:
 	MongoHostConnectionPool();
 	MongoHostConnectionPool(const MongoHostConnectionPool& other);
@@ -52,7 +52,7 @@ private:
 	friend class MongoConnectionPool;
 };
 class MongoConnectionPool;
-extern MongoConnectionPool g_Pool;
+MONGO_CXX_POOL_EXPORT extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 #endif /* MONGOHOSTCONNECTIONPOOL_H_ */

@@ -9,7 +9,6 @@ if(MongoDB_INCLUDE_DIR AND MongoDB_LIBRARIES)
     set(MongoDB_FOUND TRUE)
 
 else(MongoDB_INCLUDE_DIR AND MongoDB_LIBRARIES)
-
     find_path(MongoDB_INCLUDE_DIR mongo/client/dbclient.h
         /usr/include/
         /usr/local/include/
@@ -18,6 +17,7 @@ else(MongoDB_INCLUDE_DIR AND MongoDB_LIBRARIES)
         /opt/mongo/include/
         $ENV{ProgramFiles}/Mongo/*/include
         $ENV{SystemDrive}/Mongo/*/include
+		$ENV{SystemDrive}/local/mongo/include
         )
 
     if(WIN32)
@@ -25,6 +25,7 @@ else(MongoDB_INCLUDE_DIR AND MongoDB_LIBRARIES)
             PATHS
             $ENV{ProgramFiles}/Mongo/*/lib
             $ENV{SystemDrive}/Mongo/*/lib
+			$ENV{SystemDrive}/local/mongo/lib
             )
     else(WIN32)
         find_library(MongoDB_LIBRARIES NAMES mongoclient

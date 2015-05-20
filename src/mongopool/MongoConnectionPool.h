@@ -13,12 +13,13 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/container/map.hpp>
+#include "mongopool/MongoConfig.h"
 #include "mongopool/MongoHostConnectionPool.h"
 
 #define MCP_PERIODIC_TASK_PERIOD 30
 #define MCP_MAX_POOL_SIZE 500
 namespace mongopool {
-class MongoConnectionPool {
+class MONGO_CXX_POOL_EXPORT MongoConnectionPool {
 public:
 	MongoConnectionPool();
 	virtual ~MongoConnectionPool();
@@ -46,7 +47,7 @@ private:
 	boost::container::map<std::string, MongoHostConnectionPool> m_Pools;
 };
 
-extern MongoConnectionPool g_Pool;
+MONGO_CXX_POOL_EXPORT extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 
