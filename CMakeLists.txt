@@ -33,6 +33,9 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	endif()
 endif()
 
+# Adds functionality for handling exports
+include (GenerateExportHeader)
+
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_PATH}")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

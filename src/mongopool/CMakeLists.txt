@@ -6,8 +6,6 @@ configure_file(
     "${PROJECT_BINARY_DIR}/src/mongopool/MongoConfig.h"
 )
 
-include_directories("${PROJECT_BINARY_DIR}/src/")
-
 set(LIB_SOURCES
     MongoConnection.cpp
     MongoConnectionPool.cpp
@@ -26,22 +24,29 @@ set(LIB_FILES
 if(MSVC)
 	add_definitions(-DLIBMONGOCLIENT_NO_AUTOLIB -DBOOST_ALL_DYN_LINK)
 endif(MSVC)
-include_directories(${MongoDB_INCLUDE_DIR}
-    ${Boost_INCLUDE_DIR} ${SRC_PATH})
+
+include_directories(
+	${PROJECT_BINARY_DIR}/src	
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_BINARY_DIR}/src
+	${MongoDB_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIR} ${SRC_PATH}
+	)
 	
 add_library(mongo-cxx-pool SHARED ${LIB_FILES})
 add_library(mongo-cxx-pool-static STATIC ${LIB_FILES})
-
-target_link_libraries(mongo-cxx-pool ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
+generate_export_header(mongo-cxx-pool BASE_NAME libmongo_cxx_pool)
+set_target_properties(mongo-cxx-pool-static PROPERTIES COMPILE_FLAGS -DLIBMONGO_CXX_POOL_STATIC_DEFINE)
+target_link_libraries(mongo-cxx-pool PUBLIC ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(mongo-cxx-pool-static ${MongoDB_LIBRARIES} ${Boost_LIBRARIES})
-if(NOT MSVC)
-    set_target_properties(mongo-cxx-pool-static PROPERTIES OUTPUT_NAME mongo-cxx-pool)
-endif(NOT MSVC)
 
+set_target_properties(mongo-cxx-pool-static PROPERTIES OUTPUT_NAME mongo-cxx-pool)
+set_target_properties(mongo-cxx-pool-static PROPERTIES PREFIX "lib")
 set_target_properties(mongo-cxx-pool PROPERTIES SOVERSION "${MONGO_CXX_POOL_MAJOR}.${MONGO_CXX_POOL_MINOR}.${MONGO_CXX_POOL_PATCH}.${MONGO_CXX_POOL_BUILD}")
 
+install(FILES ${LIB_HEADERS}  ${PROJECT_BINARY_DIR}/src/mongopool/libmongo_cxx_pool_export.h DESTINATION include/mongopool)
 install(FILES "${PROJECT_BINARY_DIR}/src/mongopool/MongoConfig.h" DESTINATION include/mongopool)
-install(FILES ${LIB_HEADERS} DESTINATION include/mongopool)
+
 install(TARGETS mongo-cxx-pool mongo-cxx-pool-static
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib

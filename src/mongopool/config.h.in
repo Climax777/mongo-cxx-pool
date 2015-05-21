@@ -1,19 +1,11 @@
 #ifndef MONGO_CXX_POOL_CONFIG_H
 #define MONGO_CXX_POOL_CONFIG_H
 
+#include "mongopool/libmongo_cxx_pool_export.h"
+
 #define MONGO_CXX_POOL_MAJOR @MONGO_CXX_POOL_MAJOR@
 #define MONGO_CXX_POOL_MINOR @MONGO_CXX_POOL_MINOR@
 #define MONGO_CXX_POOL_PATCH @MONGO_CXX_POOL_PATCH@
 #define MONGO_CXX_POOL_BUILD @MONGO_CXX_POOL_BUILD@
-
-#if defined (_WIN32) && (_MSC_VER)
-  #if defined(mongo_cxx_pool_EXPORTS)
-    #define  MONGO_CXX_POOL_EXPORT __declspec(dllexport)
-  #else
-    #define  MONGO_CXX_POOL_EXPORT __declspec(dllimport)
-  #endif /* mongo_cxx_pool_EXPORTS */
-#else /* defined (_WIN32) && (_MSC_VER)*/
-  #define MONGO_CXX_POOL_EXPORT
-#endif
 
 #endif

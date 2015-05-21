@@ -14,7 +14,7 @@
 #include "mongopool/MongoConnectionPool.h"
 
 namespace mongopool {
-class MONGO_CXX_POOL_EXPORT MongoConnection {
+class LIBMONGO_CXX_POOL_EXPORT MongoConnection {
 public:
 	MongoConnection();
 	explicit MongoConnection(const std::string& host);
@@ -33,7 +33,6 @@ private:
 	mongo::ConnectionString m_ConnString;
 	mongo::DBClientBase* m_Connection;
 };
-MONGO_CXX_POOL_EXPORT extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 #endif /* MONGOCONNECTION_H_ */

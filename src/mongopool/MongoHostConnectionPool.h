@@ -15,7 +15,7 @@
 
 #define MCP_CONNECTION_IDLE_TIME 60*5
 namespace mongopool {
-class MONGO_CXX_POOL_EXPORT MongoHostConnectionPool {
+class MongoHostConnectionPool {
 public:
 	MongoHostConnectionPool();
 	MongoHostConnectionPool(const MongoHostConnectionPool& other);
@@ -52,7 +52,7 @@ private:
 	friend class MongoConnectionPool;
 };
 class MongoConnectionPool;
-MONGO_CXX_POOL_EXPORT extern MongoConnectionPool g_Pool;
+extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 #endif /* MONGOHOSTCONNECTIONPOOL_H_ */

@@ -136,6 +136,6 @@ std::string MongoConnectionPool::BuildHostString(const ConnectionString& host) {
 	return host.toString() + host.getDatabase() + "/" + host.getUser();
 }
 
-MONGO_CXX_POOL_EXPORT MongoConnectionPool g_Pool;
+MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 

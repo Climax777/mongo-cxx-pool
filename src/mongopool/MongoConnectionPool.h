@@ -19,7 +19,7 @@
 #define MCP_PERIODIC_TASK_PERIOD 30
 #define MCP_MAX_POOL_SIZE 500
 namespace mongopool {
-class MONGO_CXX_POOL_EXPORT MongoConnectionPool {
+class MongoConnectionPool {
 public:
 	MongoConnectionPool();
 	virtual ~MongoConnectionPool();
@@ -47,7 +47,7 @@ private:
 	boost::container::map<std::string, MongoHostConnectionPool> m_Pools;
 };
 
-MONGO_CXX_POOL_EXPORT extern MongoConnectionPool g_Pool;
+extern MongoConnectionPool g_Pool;
 } /* namespace mongopool */
 
 

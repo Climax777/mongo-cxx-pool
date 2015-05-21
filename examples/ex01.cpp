@@ -4,10 +4,11 @@
  *  Created on: 04 Dec 2014
  *      Author: pieter
  */
+#ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
-
 #include <windows.h>
 #include <winsock2.h>
+#endif
 #include "mongopool/MongoConnection.h"
 #include <iostream>
 #include <boost/thread.hpp>
@@ -35,9 +36,9 @@ void newConnection() {
 	conn.done();
 }
 int main() {
+	cout << "starting 10 connections" << endl;
 	mongo::client::initialize();
 	boost::thread_group worker_threads;
-	cout<< "starting 10 connections" << endl;
 	for(int i = 0; i < 10; ++i) {
 		worker_threads.create_thread(newConnection);
 	}
