@@ -1,4 +1,4 @@
-find_package(Boost COMPONENTS system thread date_time regex REQUIRED)
+find_package(Boost COMPONENTS system thread date_time regex chrono REQUIRED)
 find_package(MongoDB REQUIRED)
 
 include_directories("${PROJECT_BINARY_DIR}/src/")

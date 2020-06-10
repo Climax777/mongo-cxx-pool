@@ -27,7 +27,7 @@ void newConnection() {
 		cout<< cs.toString();
 		cout<< endl;
 	}
-	boost::this_thread::sleep_for(chrono::seconds(1));
+	boost::this_thread::sleep_for(boost::chrono::seconds(1));
 	conn.done();
 }
 int main() {
